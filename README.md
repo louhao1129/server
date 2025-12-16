@@ -6,6 +6,18 @@ Excel共享表格，大开销（内存\>64GB、CPU核心数\>32、使用GPU）�
 
 【金山文档 \| WPS云文档】 服务器使用登记 <https://www.kdocs.cn/l/ctd8LutKfpl3>
 
+-   涉及到权限不足的操作，可以联系管理员
+
+-   已安装软件列表
+
+    -   miniconda、uv、pixi：搭建环境
+
+    -   htop：查看CPU和内存占用
+
+    -   screen、tmux、zellij：长时间运行代码
+
+    -   ncdu：查看磁盘空间
+
 -   [x] 安装常用软件
 
 -   [x] 规范：新建用户，**确保每个人数据互相独立**，普通用户没有root权限

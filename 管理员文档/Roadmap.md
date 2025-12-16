@@ -19,3 +19,5 @@
 -   [ ] 安装更多常用软件，比如cellranger、spaceranger
 
 -   [ ] 创建共享conda环境，方便运行pyscenic、velocyto、omicverse等
+
+-   [ ] 配置pytorch环境，并撰写文档

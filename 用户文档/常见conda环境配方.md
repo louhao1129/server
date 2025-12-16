@@ -1,3 +1,9 @@
+channels:
+
+-   conda-forge
+-   bioconda
+-   defaults
+
 # cell2location
 
 ```         

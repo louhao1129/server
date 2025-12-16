@@ -14,6 +14,10 @@
 
 云服务器域名: sxycloud1.top，SSH/FileZilla/VSCode等软件的连接端口: 18691
 
+**vscode登录**
+
+[vscode下载](https://code.visualstudio.com/)
+
 vscode配置信息如下
 
 ```{Host sxy}
@@ -31,6 +35,10 @@ HostName sxycloud1.top
 -   内存：1TB
 
 -   硬盘：2TB
+
+-   云服务器域名: sxycloud1.top
+
+-   SSH/FileZilla/VSCode等软件的连接端口: 18691
 
 ------------------------------------------------------------------------
 

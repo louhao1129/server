@@ -14,6 +14,14 @@
 
 云服务器域名: sxycloud1.top，SSH/FileZilla/VSCode等软件的连接端口: 18691
 
+vscode配置信息如下
+
+```{Host sxy}
+    HostName sxycloud1.top
+    User 你的用户名
+    Port 18691
+```
+
 ------------------------------------------------------------------------
 
 **服务器基本信息**

@@ -19,7 +19,8 @@
 vscode配置信息如下
 
 ```{Host sxy}
-HostName sxycloud1.top
+Host sxy
+    HostName sxycloud1.top
     User 你的用户名
     Port 18691
 ```

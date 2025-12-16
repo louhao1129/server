@@ -24,6 +24,28 @@ conda activate myenv
 pip install torch 总结：Conda 的可执行文件是共享的，但环境（Environments）应该是私有的。
 ```
 
+其他常用操作
+
+```{bash}
+# 查看所有已安装的包
+conda list
+
+# 查看某个包是否已安装
+conda list numpy
+
+# 删除包
+conda remove numpy
+
+# 删除环境
+conda remove -n myenv --all
+
+# 导出环境配置
+conda env export > environment.yaml
+
+# 从配置文件创建环境
+conda env create -f environment.yaml
+```
+
 如果出现conda: command not found，先运行下面的代码尝试解决，并且联系管理员
 
 ```{bash}

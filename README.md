@@ -76,6 +76,6 @@ Rstudio-server退出后再登录一直转圈，打不开: 因为你没有正常�
 
     -   git：代码版本管理
 
-    -   cellranger9、cellranger10，cellranger参考基因组存放在/home/public/cellranger-refdata下
+    -   cellranger9、cellranger10，cellranger参考基因组存放在 /home/public/cellranger-refdata下
 
 ------------------------------------------------------------------------

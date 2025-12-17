@@ -46,6 +46,7 @@ Rstudio-server退出后再登录一直转圈，打不开: 因为你没有正常�
 -   查看自己程序占用的资源: 执行 seeuse、top、htop
 -   查看占用的内存：执行 free -h、htop
 -   查看显卡（GPU）使用情况：nvidia-smi
+-   查看磁盘使用空间：du -h --max-depth=1、ncdu
 
 更多命令详见[如何监控服务器资源使用](用户文档/监控资源使用.md)
 

@@ -10,11 +10,9 @@
 
 [Jupyter登录](http://sxycloud1.top:18693)
 
-云服务器域名: sxycloud1.top，SSH/FileZilla/VSCode等软件的连接端口: 18691
-
 ssh 登录：`ssh -p 18691 你的用户名@sxycloud1.top`
 
-vscode ssh 配置信息如下
+vscode 登录
 
 ```{Host sxy}
 Host sxy
@@ -22,6 +20,8 @@ Host sxy
     User 你的用户名
     Port 18691
 ```
+
+云服务器域名: sxycloud1.top，SSH/FileZilla/VSCode等软件的连接端口: 18691
 
 **---常见问题---**
 

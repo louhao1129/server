@@ -12,9 +12,9 @@
 
 云服务器域名: sxycloud1.top，SSH/FileZilla/VSCode等软件的连接端口: 18691
 
-[vscode登录](https://code.visualstudio.com/)
+ssh 登录：ssh -p 18691 你的用户名\@sxycloud1.top
 
-vscode配置信息如下
+vscode ssh 配置信息如下
 
 ```{Host sxy}
 Host sxy

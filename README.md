@@ -65,7 +65,7 @@ Rstudio-server退出后再登录一直转圈，打不开: 因为你没有正常�
 
 -   涉及到权限不足的操作，可以联系管理员
 
--   已安装软件如下，需要更多软件可以向管理员申请进行
+-   已安装软件如下，需要更多软件可以自行安装或者向管理员申请统一安装
 
     -   tree：以树的形式查看文件结构
 
@@ -81,6 +81,6 @@ Rstudio-server退出后再登录一直转圈，打不开: 因为你没有正常�
 
     -   git：代码版本管理
 
-    -   cellranger9、cellranger10，cellranger参考基因组存放在 /home/public/cellranger-refdata下
+    -   cellranger9、cellranger10，参考基因组存放在 /home/public/cellranger-refdata
 
 ------------------------------------------------------------------------

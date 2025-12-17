@@ -1,0 +1,21 @@
+[workspace]
+channels = ["conda-forge", "bioconda"]
+name = "scpy"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+scanpy = ">=1.11.5,<2"
+squidpy = ">=1.6.5,<2"
+pydeseq2 = ">=0.5.3,<0.6"
+decoupler = ">=1.5.0,<2"
+harmonypy = ">=0.0.10,<0.0.11"
+gseapy = ">=1.1.10,<2"
+python-igraph = ">=1.0.0,<2"
+leidenalg = ">=0.11.0,<0.12"
+plotnine = ">=0.15.1,<0.16"
+
+[pypi-dependencies]
+pyclustree = ">=0.4.1, <0.5"

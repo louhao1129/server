@@ -22,3 +22,5 @@ torch.cuda.is_available()
 
 # 输出true说明安装成功
 ```
+
+最后，使用GPU跑代码，必须要在表格中进行登记

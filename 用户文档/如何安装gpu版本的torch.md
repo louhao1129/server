@@ -27,9 +27,9 @@ torch.cuda.is_available()
 
 另外：
 
-如果使用uv配置pytorch，需要手动编辑pyproject.toml文件如下，然后使用 `uv sync` ，同样方法检查pytorch是否可用GPU
+如果使用uv配置pytorch，需要手动编辑pyproject.toml文件如下，然后执行 `uv sync` ，同样方法检查pytorch是否可用GPU
 
-```{ss'ds'd'fs'dsv}
+```{python}
 [project]
 name = "dl"
 version = "0.1.0"
@@ -69,4 +69,6 @@ explicit = true
 torch = { index = "pytorch-cu124" }
 torchvision = { index = "pytorch-cu124" }
 torchaudio = { index = "pytorch-cu124" }
+
+
 ```

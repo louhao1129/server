@@ -4,7 +4,7 @@
 nvidia-smi
 ```
 
-然后进行[pytorch官网](https://pytorch.org/)，找到对应版本的安装命令
+然后进入[pytorch官网](https://pytorch.org/)，找到对应版本的安装命令
 
 ![](images/paste-25.png)
 

@@ -18,10 +18,10 @@ Usage: $0 [OPTIONS]
 
 必填参数:
   -p, --path <path>         压缩包完整路径
-  -c, --commit-id <id>      Commit ID
+  -c, --commit-id <id>      Commit ID(前往 帮助 > 关于,即可找到Commit(例如, f70a9bc9a...))
 
 可选参数:
-  -r, --remote <path>       百度网盘中压缩包存放的路径 (默认: /software/positron，注意填写压缩包所在的文件夹名称)
+  -r, --remote <path>       百度网盘中压缩包存放的路径 (默认: /software/positron,注意填写压缩包所在的文件夹名称)
   -h, --help                显示帮助
 
 说明:

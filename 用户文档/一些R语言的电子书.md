@@ -3,6 +3,7 @@
 -   复杂热图绘制（使用ComplexHeatmap）：[ComplexHeatmap Complete Reference](https://jokergoo.github.io/ComplexHeatmap-reference/book/introduction.html)
 -   机器学习：[R语言实战机器学习](https://ayueme.github.io/machine_learning_base_r/)
 -   机器学习（使用mlr3）：[Applied Machine Learning Using mlr3 in R](https://mlr3book.mlr-org.com/)
+-   机器学习（使用tidymodels）：[Tidy Modeling with R](https://www.tmwr.org/)
 -   机器学习：[An Introduction to Statistical Learning](https://www.statlearning.com/)
 -   ggplot进阶学习：[ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/)
 -   医学统计学：[R语言实战医学统计](https://ayueme.github.io/R_medical_stat/)

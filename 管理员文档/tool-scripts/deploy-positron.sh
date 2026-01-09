@@ -28,8 +28,8 @@ Usage: $0 [OPTIONS]
   如果压缩包已存在，将跳过下载步骤
 
 示例:
-  $0 -p /home/user/downloads/positron/app.tar.gz -c abc123def
-  $0 -p /home/user/downloads/positron/app.tar.gz -c abc123def -r /backup/positron
+  bash $0 -p /home/user/downloads/positron/app.tar.gz -c abc123def
+  bash $0 -p /home/user/downloads/positron/app.tar.gz -c abc123def -r /backup/positron
 
 EOF
     exit 1

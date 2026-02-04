@@ -1,5 +1,7 @@
 对于Rstudio、JupyterHub启动的进程，限制用户可用的CPU核心数、内存**对其不产生影响（即limit_user.sh脚本无效）.**原因是：它被放在了 `system.slice`，而不是 `user.slice`。
 
+**推荐使用limit_user_system.sh，对所有system服务（包括Rserver和JupyterHub）设置总上限为960GB（但是仍然推荐对二者单独设置上限）**
+
 ```{bash}
 # 检查一个jupyterHub或者Rserver进程会发现
 cat /proc/13733/cgroup 

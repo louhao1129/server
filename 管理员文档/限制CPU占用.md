@@ -11,3 +11,5 @@ sudo systemctl set-property rstudio-server.service CPUQuota=9600%
 ```{bash}
 sudo systemctl set-property jupyterhub.service CPUQuota=9600%
 ```
+
+以上所有的操作（包括limit_cpu.sh），系统重启之后可能会失效，需要重新运行

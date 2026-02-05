@@ -32,3 +32,7 @@ sudo systemctl set-property jupyterhub.service MemoryMax=960G
 # 查看配置
 systemctl status jupyterhub.service
 ```
+
+另外：
+
+limit_rsession.sh 脚本用于防止**一个**rsession进程占用太多CPU和内存

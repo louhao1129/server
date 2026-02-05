@@ -1,60 +1,71 @@
 #!/bin/bash
 
-# --- 配置区域 ---
-# 1. 内存限制：512GB (字节)
-MEM_LIMIT=$((512 * 1024 * 1024 * 1024))
-# 2. 进程数量限制：每个用户最多 10 个
-MAX_PROC_PER_USER=10
+# ================= 配置中心 =================
+# 【只需要修改这里的一个数字即可】
+# 设置每个用户的内存总阈值 (单位: GB)
+LIMIT_GB=256
+# ===========================================
+
+# --- 自动计算区域 (无需修改) ---
+# 1. prlimit 使用字节 (Bytes)
+SINGLE_PROC_LIMIT=$((LIMIT_GB * 1024 * 1024 * 1024))
+# 2. ps 统计使用 KB
+USER_MEM_LIMIT_KB=$((LIMIT_GB * 1024 * 1024))
 # 3. 目标进程关键词
 TARGET_REGEX="rsession|ipykernel|jupyter-lab|jupyter-notebook"
 
+echo "脚本启动: 限制阈值设为 ${LIMIT_GB}GB"
+
 while true; do
     # =======================================================
-    # 功能一：遍历所有目标进程，施加 CPU 和 内存 限制
+    # 功能一：单进程限制 (防止单个进程直接撑爆内存)
     # =======================================================
-    # 获取所有匹配的 PID
     for pid in $(pgrep -f "$TARGET_REGEX"); do
-        
-        # 排除脚本自身和 grep/cpulimit 进程
+        # 排除自身
         if [[ "$pid" == "$$" ]] || [[ "$pid" == "$BASHPID" ]]; then continue; fi
         
-        # 1. 检查并补充内存限制
+        # 检查并补充内存限制
         if grep -q "Max address space.*unlimited" /proc/$pid/limits 2>/dev/null; then
-            # echo "设置内存限制 -> PID $pid"
-            sudo prlimit --pid $pid --as=$MEM_LIMIT
+            # 这里不打印日志了，避免刷屏，默默执行即可
+            sudo prlimit --pid $pid --as=$SINGLE_PROC_LIMIT
         fi
 
-        # 2. 检查并启动 CPU 限制
+        # 检查并启动 CPU 限制
         if ! pgrep -f "cpulimit.*-p $pid" > /dev/null; then
-            echo "新进程发现: $pid -> 启动 CPU/内存限制"
-            sudo cpulimit -p $pid -l 3200 -b -z
+            echo "发现新进程: $pid -> 启动 CPU限制"
+            sudo cpulimit -p $pid -l 2400 -b -z
         fi
     done
 
     # =======================================================
-    # 功能二：检查每个用户的进程总数，超标则杀掉最新的
+    # 功能二：计算用户总内存，超标则杀掉最新进程
     # =======================================================
-    # 1. 找出当前运行这些进程的所有用户名 (去重)
-    # ps -eo user,cmd 列出用户和命令，grep 筛选关键词，awk 提取用户名，sort|uniq 去重
+    
+    # 找出相关用户
     active_users=$(ps -eo user,cmd | grep -E "$TARGET_REGEX" | grep -v "grep" | awk '{print $1}' | sort | uniq)
 
     for user in $active_users; do
-        # 2. 统计该用户运行了多少个目标进程
-        count=$(pgrep -u "$user" -f "$TARGET_REGEX" | wc -l)
+        # 计算该用户所有相关进程的物理内存 (RSS) 总和 (KB)
+        total_mem_kb=$(ps -u "$user" -o rss,cmd | grep -E "$TARGET_REGEX" | grep -v "grep" | awk '{sum+=$1} END {print sum+0}')
 
-        # 3. 如果超过限制
-        if [ "$count" -gt "$MAX_PROC_PER_USER" ]; then
-            echo "警告: 用户 $user 运行了 $count 个计算进程 (上限 $MAX_PROC_PER_USER)"
+        # 判断是否超过 300GB (转换后的KB值)
+        if [ "$total_mem_kb" -gt "$USER_MEM_LIMIT_KB" ]; then
             
-            # 找出该用户“最新”启动的一个进程 (-n 参数表示 newest)
+            # 换算成 GB 用于显示日志
+            total_mem_gb=$((total_mem_kb / 1024 / 1024))
+            
+            echo "警告: 用户 $user 总内存已达 ${total_mem_gb}GB (上限 ${LIMIT_GB}GB)"
+            
+            # 找出最新启动的一个进程
             newest_pid=$(pgrep -u "$user" -f "$TARGET_REGEX" -n)
             
             if [ -n "$newest_pid" ]; then
-                echo "--> 杀掉超出限额的最新进程: $newest_pid"
+                echo "--> 内存超标，终止最新进程: $newest_pid"
                 sudo kill -9 "$newest_pid"
+                sleep 2
             fi
         fi
     done
 
-    sleep 3
+    sleep 5
 done

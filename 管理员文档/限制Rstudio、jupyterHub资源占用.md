@@ -35,4 +35,4 @@ systemctl status jupyterhub.service
 
 另外：
 
-limit_rsession.sh 脚本用于防止**一个**rsession进程占用太多CPU和内存
+limit_session.sh 脚本用于防止**一个**session进程占用太多CPU和内存

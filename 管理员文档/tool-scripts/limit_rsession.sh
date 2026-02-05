@@ -17,5 +17,5 @@ while true; do
             sudo cpulimit -p $pid -l 3200 -b -z
         fi
     done
-    sleep 30
+    sleep 10
 done

@@ -9,7 +9,7 @@ LIMIT_GB=256
 # --- 自动计算区域 (无需修改) ---
 # 1. prlimit 使用字节 (Bytes)
 SINGLE_PROC_LIMIT=$((LIMIT_GB * 1024 * 1024 * 1024))
-# 2. ps 统计使用 KB
+# 2. PSS 统计使用 KB（PSS比RSS更准确，按比例计算共享内存）
 USER_MEM_LIMIT_KB=$((LIMIT_GB * 1024 * 1024))
 # 3. 目标进程关键词
 TARGET_REGEX="rsession|ipykernel|jupyter-lab|jupyter-notebook"
@@ -45,16 +45,34 @@ while true; do
     active_users=$(ps -eo user,cmd | grep -E "$TARGET_REGEX" | grep -v "grep" | awk '{print $1}' | sort | uniq)
 
     for user in $active_users; do
-        # 计算该用户所有相关进程的物理内存 (RSS) 总和 (KB)
-        total_mem_kb=$(ps -u "$user" -o rss,cmd | grep -E "$TARGET_REGEX" | grep -v "grep" | awk '{sum+=$1} END {print sum+0}')
+        # 跳过空用户名
+        if [ -z "$user" ]; then continue; fi
+        
+        # 计算该用户所有相关进程的 PSS（比例内存）总和 (KB)
+        # PSS 比 RSS 更准确，因为它按比例分配共享内存，避免重复计算
+        total_mem_kb=0
+        for pid in $(pgrep -u "$user" -f "$TARGET_REGEX" 2>/dev/null); do
+            # 从 smaps_rollup 读取 Pss 值（如果存在）
+            if [ -f "/proc/$pid/smaps_rollup" ]; then
+                pss_kb=$(grep "^Pss:" /proc/$pid/smaps_rollup 2>/dev/null | awk '{print $2}')
+            else
+                # 旧内核：从 smaps 读取并求和
+                pss_kb=$(grep "^Pss:" /proc/$pid/smaps 2>/dev/null | awk '{sum+=$2} END {print sum+0}')
+            fi
+            # 如果获取失败，回退到 RSS
+            if [ -z "$pss_kb" ] || [ "$pss_kb" = "0" ]; then
+                pss_kb=$(ps -p "$pid" -o rss= 2>/dev/null | tr -d ' ')
+            fi
+            total_mem_kb=$((total_mem_kb + ${pss_kb:-0}))
+        done
 
-        # 判断是否超过 300GB (转换后的KB值)
+        # 判断是否超过 GB (转换后的KB值)
         if [ "$total_mem_kb" -gt "$USER_MEM_LIMIT_KB" ]; then
             
             # 换算成 GB 用于显示日志
             total_mem_gb=$((total_mem_kb / 1024 / 1024))
             
-            echo "警告: 用户 $user 总内存已达 ${total_mem_gb}GB (上限 ${LIMIT_GB}GB)"
+            echo "警告: 用户 $user 总内存(PSS)已达 ${total_mem_gb}GB (上限 ${LIMIT_GB}GB)"
             
             # 找出最新启动的一个进程
             newest_pid=$(pgrep -u "$user" -f "$TARGET_REGEX" -n)
